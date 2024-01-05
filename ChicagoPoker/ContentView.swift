@@ -62,7 +62,7 @@ struct Card: CustomStringConvertible {
     }
 }
 
-struct Deck {
+class Deck {
     var cards: [Card] = Card.Suit.allCases
         .map { suit in
             Card.Rank.allCases.map { rank in
@@ -70,22 +70,52 @@ struct Deck {
             }
         }
         .flatMap { $0 }
+    
+    func deal() -> Card {
+        return self.cards.removeFirst()
+    }
 }
 
 struct ContentView: View {
     @State var deck: Deck = Deck()
+    var flopIsVisible: Bool = false
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
+            Text("Flop")
+            HStack{
+                CardView(card: deck.deal())
+                CardView(card: deck.deal())
+                CardView(card: deck.deal())
+            }
+            Text("Hand")
+            HStack {
+                CardView(card: deck.deal())
+                CardView(card: deck.deal())
+            }
+            Text("Deck: \(deck.cards.count)")
             Text("first card: \(deck.cards[0].description)")
             Button("Shuffle") {
                 deck.cards.shuffle()
             }
         }
         .padding()
+    }
+}
+
+struct CardView: View {
+    var card: Card
+    var isFaceUp: Bool = true
+    var body: some View {
+        ZStack {
+            if isFaceUp {
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundColor(card.suit == Card.Suit.clubs ? .gray: .yellow)
+                Text("\(card.description)")
+            } else {
+                RoundedRectangle(cornerRadius: 15).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+            }
+        }
     }
 }
 
