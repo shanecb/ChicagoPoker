@@ -57,12 +57,14 @@ struct Card: CustomStringConvertible {
     let rank: Rank
     let suit: Suit
     
+    var isFaceUp = false
     var description: String {
         rank.description + suit.description
     }
+    
 }
 
-class Deck {
+struct Deck {
     var cards: [Card] = Card.Suit.allCases
         .map { suit in
             Card.Rank.allCases.map { rank in
@@ -71,50 +73,91 @@ class Deck {
         }
         .flatMap { $0 }
     
-    func deal() -> Card {
+    mutating func deal() -> Card {
         return self.cards.removeFirst()
     }
 }
 
 struct ContentView: View {
     @State var deck: Deck = Deck()
-    var flopIsVisible: Bool = false
+    @State var flop: Array<Card> = []
+    @State var hand: Array<Card> = []
     
     var body: some View {
         VStack {
-            Text("Flop")
-            HStack{
-                CardView(card: deck.deal())
-                CardView(card: deck.deal())
-                CardView(card: deck.deal())
-            }
-            Text("Hand")
-            HStack {
-                CardView(card: deck.deal())
-                CardView(card: deck.deal())
-            }
+            flopView
+            handView
             Text("Deck: \(deck.cards.count)")
             Text("first card: \(deck.cards[0].description)")
+            deckToolbar
+        }
+        .padding()
+    }
+    
+    var flopView: some View {
+        VStack{
+            Text("Flop")
+            HStack{
+                ForEach(flop.indices, id: \.self) { index in
+                    CardView(flop[index])
+                }
+            }
+        }
+    }
+    
+    var handView: some View {
+        VStack {
+            Text("Hand")
+            HStack {
+                ForEach(hand.indices, id: \.self) { index in
+                    CardView(hand[index])
+                }
+            }
+        }
+    }
+    
+    var deckToolbar: some View {
+        HStack {
+            Button("Deal") {
+                if flop.count < 3 {
+                    flop.append(deck.deal())
+                } else if hand.count < 2 {
+                    hand.append(deck.deal())
+                }
+            }
+            Spacer()
             Button("Shuffle") {
                 deck.cards.shuffle()
             }
+            Spacer()
+            Button("Reset"){
+                flop = []
+                hand = []
+            }
         }
-        .padding()
     }
 }
 
 struct CardView: View {
     var card: Card
-    var isFaceUp: Bool = true
+    
+    init(_ card: Card) {
+        self.card = card
+    }
+
     var body: some View {
         ZStack {
-            if isFaceUp {
-                RoundedRectangle(cornerRadius: 15)
-                    .foregroundColor(card.suit == Card.Suit.clubs ? .gray: .yellow)
-                Text("\(card.description)")
-            } else {
-                RoundedRectangle(cornerRadius: 15).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+            let base = RoundedRectangle(cornerRadius: 15)
+            Group {
+                base.foregroundColor(.white)
+                base.strokeBorder(lineWidth: 4)
+                Text(card.content)
+                    .font(.system(size: 200))
+                    .minimumScaleFactor(0.01)
+                    .aspectRatio(1, contentMode: .fit)
             }
+            .opacity(card.isFaceUp ? 1 : 0)
+            base.fill().opacity(card.isFaceUp ? 0 : 1)
         }
     }
 }
