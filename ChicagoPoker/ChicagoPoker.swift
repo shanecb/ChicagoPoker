@@ -9,7 +9,7 @@ import Foundation
 
 struct ChicagoPoker<CardContent> {
     private(set) var deck = Deck()
-    var players: Array<Player> = []
+    private(set) var players: Array<Player> = []
     
     init(numPlayers: Int) {
         for playerId in 0..<numPlayers {
@@ -34,6 +34,21 @@ struct ChicagoPoker<CardContent> {
                 }
             }
         }
+    }
+    
+    mutating func rankPlayerPokerHands() -> Int {
+        // compares the players hands, muatates their scores, returns the playerId of the highest scorer
+        var maxScore = [-1, -1]
+        for idx in players.indices {
+            let currentScore = scorePokerHand(hand: players[idx].hand)
+            if currentScore > maxScore[1] {
+                maxScore = [idx, currentScore]
+            } else if currentScore == maxScore[1] {
+                tiebreakPokerHands(hand1: players[idx].hand, hand2: players[maxScore[0]].hand)
+            }
+        }
+        players[maxScore[0]].score += maxScore[1]
+        return maxScore[0]
     }
     
     func scorePokerHand(hand: Array<Card>) -> Int {
@@ -84,6 +99,9 @@ struct ChicagoPoker<CardContent> {
         }
     }
     
+    func tiebreakPokerHands(hand1: Array<Card>, hand2: Array<Card>){
+        
+    }
     
     struct Player: Identifiable {
         // let username: String
