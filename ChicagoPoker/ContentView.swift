@@ -97,9 +97,11 @@ struct ContentView: View {
     var flopView: some View {
         VStack{
             Text("Flop")
-            HStack{
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 0)], spacing: 0) {
                 ForEach(flop.indices, id: \.self) { index in
                     CardView(flop[index])
+                        .aspectRatio(2/3, contentMode: .fit)
+                        .padding(4)
                 }
             }
         }
@@ -108,9 +110,11 @@ struct ContentView: View {
     var handView: some View {
         VStack {
             Text("Hand")
-            HStack {
+            LazyVGrid(columns: [GridItem(), GridItem()], spacing: 0) {
                 ForEach(hand.indices, id: \.self) { index in
                     CardView(hand[index])
+                        .aspectRatio(2/3, contentMode: .fit)
+                        .padding(4)
                 }
             }
         }
@@ -151,13 +155,11 @@ struct CardView: View {
             Group {
                 base.foregroundColor(.white)
                 base.strokeBorder(lineWidth: 4)
-                Text(card.content)
+                Text(card.description)
                     .font(.system(size: 200))
                     .minimumScaleFactor(0.01)
                     .aspectRatio(1, contentMode: .fit)
             }
-            .opacity(card.isFaceUp ? 1 : 0)
-            base.fill().opacity(card.isFaceUp ? 0 : 1)
         }
     }
 }
