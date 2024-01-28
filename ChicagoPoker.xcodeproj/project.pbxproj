@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F260D142B66DEDB00B14F91 /* ChicagoPoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F260D132B66DEDB00B14F91 /* ChicagoPoker.swift */; };
 		3F6A93E22B3C8D2E00BF56FE /* ChicagoPokerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A93E12B3C8D2E00BF56FE /* ChicagoPokerApp.swift */; };
 		3F6A93E42B3C8D2E00BF56FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A93E32B3C8D2E00BF56FE /* ContentView.swift */; };
 		3F6A93E62B3C8D2F00BF56FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A93E52B3C8D2F00BF56FE /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F260D132B66DEDB00B14F91 /* ChicagoPoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoPoker.swift; sourceTree = "<group>"; };
 		3F6A93DE2B3C8D2E00BF56FE /* ChicagoPoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChicagoPoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F6A93E12B3C8D2E00BF56FE /* ChicagoPokerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChicagoPokerApp.swift; sourceTree = "<group>"; };
 		3F6A93E32B3C8D2E00BF56FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 		3F6A93E02B3C8D2E00BF56FE /* ChicagoPoker */ = {
 			isa = PBXGroup;
 			children = (
+				3F260D132B66DEDB00B14F91 /* ChicagoPoker.swift */,
 				3F6A93E12B3C8D2E00BF56FE /* ChicagoPokerApp.swift */,
 				3F6A93E32B3C8D2E00BF56FE /* ContentView.swift */,
 				3F6A93E52B3C8D2F00BF56FE /* Assets.xcassets */,
@@ -259,6 +262,7 @@
 			files = (
 				3F6A93E42B3C8D2E00BF56FE /* ContentView.swift in Sources */,
 				3F6A93E22B3C8D2E00BF56FE /* ChicagoPokerApp.swift in Sources */,
+				3F260D142B66DEDB00B14F91 /* ChicagoPoker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
